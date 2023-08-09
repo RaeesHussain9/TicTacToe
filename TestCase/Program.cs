@@ -6,7 +6,6 @@
 // 5th - (optional) redo check win method to see if it can be shorter
 // 6th - post code to github get code reviewed by Avtar.
 
-
 namespace Tut1
 {
     public class Program
@@ -25,28 +24,26 @@ namespace Tut1
 
         static void Main(string[] args)
         {
-            Console.WriteLine(GetInput());
+            while (turnCounter < 9)
+            {
+                PrintBoard();
 
-            //while (turnCounter < 9)
-            //{
-            //    PrintBoard();
+                InputFromUser();
 
-            //    InputFromUser();
+                turnCounter++;
 
-            //    turnCounter++;
+                if (turnCounter >= 5 && CheckWin())
+                {
+                    PrintBoard();
+                    break;
+                }
+                else if (turnCounter >= 9)
+                {
+                    Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!DRAW!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    break;
+                }
 
-            //    if (turnCounter >= 5 && CheckWin()) 
-            //    {
-            //        PrintBoard();
-            //        break;
-            //    }
-            //    else if (turnCounter >= 9)
-            //    {
-            //        Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!DRAW!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            //        break;
-            //    }
-
-            //}
+            }
         }
 
         private static int GetInput()
