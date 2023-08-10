@@ -6,61 +6,15 @@
 // 5th - (optional) redo check win method to see if it can be shorter
 // 6th - post code to github get code reviewed by Avtar.
 
-using TestCase;
 using TestCase.Managers;
 
 namespace Tut1
 {
     public class Program
     {
-        private static Player __CurrentPlayer = Player.Crosses;
-
-        private static BoardManager __BoardManager;
-        private static InputManager __InputManager;
-
-        private static int turnCounter = 0;
-
-        static void Main(string[] args)
+        static void Main()
         {
-            __BoardManager = new BoardManager(3, 3);
-            __InputManager = new InputManager(0, 2);
-
-            while (turnCounter < 9)
-            {
-                __BoardManager.PrintBoard();
-
-                PlayerTurn();
-
-                turnCounter++;
-
-                if (turnCounter >= 5 && __BoardManager.CheckWin())
-                {
-                    __BoardManager.PrintBoard();
-                    break;
-                }
-                else if (turnCounter >= 9)
-                {
-                    Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!DRAW!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    break;
-                }
-
-            }
-        }
-
-        private static void PlayerTurn()
-        {
-            PlayerPosition _Position = __InputManager.GetPlayerPositionFromUser(__CurrentPlayer);
-
-            if (__BoardManager.AddPlayerPositionToBoard(__CurrentPlayer, _Position.Row, _Position.Column))
-            {
-                __CurrentPlayer = __CurrentPlayer == Player.Crosses ? Player.Noughts : Player.Crosses;
-            }
-            else
-            {
-                Console.WriteLine("Space already taken try again");
-                PlayerTurn();
-            }
-
+            new GameManager().PlayGame();
         }
     }
 }
