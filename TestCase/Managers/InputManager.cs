@@ -13,7 +13,7 @@
 
         private int GetInput(BoardPosition position)
         {
-            Console.WriteLine($"Choose {position} position - Enter a number between 0 and 2: ");
+            Console.WriteLine($"Choose {position} position - Enter a number between {__MinValue} and {__MaxValue}: ");
 
             if (int.TryParse(Console.ReadLine(), out int num))
             {
