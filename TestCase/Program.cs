@@ -6,6 +6,8 @@
 // 5th - (optional) redo check win method to see if it can be shorter
 // 6th - post code to github get code reviewed by Avtar.
 
+using TestCase;
+
 namespace Tut1
 {
     public class Program
@@ -46,29 +48,30 @@ namespace Tut1
             }
         }
 
-        private static int GetInput()
+        private static int GetInput(BoardPosition position)
         {
-            Console.WriteLine("Enter number: ");
+            Console.WriteLine($"Choose {position} position - Enter a number between 0 and 2: ");
 
             if (int.TryParse(Console.ReadLine(), out int num))
             {
-                return num;
+                if (num >= 0 && num <= 2)
+                {
+                    return num;
+                }
             }
 
-            return GetInput();
+            return GetInput(position);
         }
 
         private static void InputFromUser()
         {
-            Console.Write("Input a number between 0 and 2. ");
+            Console.WriteLine($"Player '{(isPlayerXTurn ? XPLAYERTOKEN : OPLAYERTOKEN)}' turn");
 
-            int xPLane = int.Parse(Console.ReadLine());
+            int row = GetInput(BoardPosition.Row);
 
-            Console.Write("Input a number between 0 and 2. ");
+            int column = GetInput(BoardPosition.Column);
 
-            int yPlane = int.Parse(Console.ReadLine());
-
-            PlayerTurn(xPLane, yPlane);
+            PlayerTurn(row, column);
         }
 
         private static void PlayerTurn(int xPlane, int yPlane)
@@ -102,6 +105,7 @@ namespace Tut1
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
         }
 
         private static bool CheckWin()
