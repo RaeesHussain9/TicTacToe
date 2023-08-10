@@ -1,12 +1,8 @@
-﻿using System.Numerics;
-
-namespace TestCase.Managers
+﻿namespace TestCase.Managers
 {
     public class BoardManager
     {
         private const string EMPTY_SPACE = "-";
-        private const string XPLAYERTOKEN = "X";
-        private const string OPLAYERTOKEN = "O";
 
         private readonly int __Rows;
         private readonly int __Columns;
@@ -19,11 +15,12 @@ namespace TestCase.Managers
 
             InstantiateBoard();
         }
+
         public bool AddPlayerPositionToBoard(Player player, int row, int column)
         {
             if (__Board[row][column] == EMPTY_SPACE)
             {
-                __Board[row][column] = player == Player.Crosses ? XPLAYERTOKEN : OPLAYERTOKEN;
+                __Board[row][column] = PlayerHelper.GetPlayerToken(player);
 
                 return true;
             }
@@ -71,13 +68,13 @@ namespace TestCase.Managers
 
                 if (rowEquals)
                 {
-                    if (firstElement == XPLAYERTOKEN)
+                    if (firstElement == PlayerHelper.XPLAYERTOKEN)
                     {
                         Console.WriteLine("player X wins");
                         noRowsMatch = false;
                         return true;
                     }
-                    else if ((firstElement == OPLAYERTOKEN))
+                    else if ((firstElement == PlayerHelper.OPLAYERTOKEN))
                     {
                         Console.WriteLine("player O wins");
                         noRowsMatch = false;
@@ -103,13 +100,13 @@ namespace TestCase.Managers
                 }
                 if (colsEquals)
                 {
-                    if (firstColElement == XPLAYERTOKEN)
+                    if (firstColElement == PlayerHelper.XPLAYERTOKEN)
                     {
                         Console.WriteLine("player X wins");
                         noColsMatch = false;
                         return true;
                     }
-                    else if ((firstColElement == OPLAYERTOKEN))
+                    else if ((firstColElement == PlayerHelper.OPLAYERTOKEN))
                     {
                         Console.WriteLine("player O wins");
                         noColsMatch = false;
@@ -133,12 +130,12 @@ namespace TestCase.Managers
 
             if (mainDiagonalMatch)
             {
-                if (firstMainDiagonalElement == XPLAYERTOKEN)
+                if (firstMainDiagonalElement == PlayerHelper.XPLAYERTOKEN)
                 {
                     Console.WriteLine("player X wins");
                     return true;
                 }
-                else if (firstMainDiagonalElement == OPLAYERTOKEN)
+                else if (firstMainDiagonalElement == PlayerHelper.OPLAYERTOKEN)
                 {
                     Console.WriteLine("player O wins");
                     return true;
@@ -161,12 +158,12 @@ namespace TestCase.Managers
 
             if (inverseDiagonalMatch)
             {
-                if (firstInverseDiagonuleElement == XPLAYERTOKEN)
+                if (firstInverseDiagonuleElement == PlayerHelper.XPLAYERTOKEN)
                 {
                     Console.WriteLine("player X wins");
                     return true;
                 }
-                else if (firstInverseDiagonuleElement == OPLAYERTOKEN)
+                else if (firstInverseDiagonuleElement == PlayerHelper.OPLAYERTOKEN)
                 {
                     Console.WriteLine("player O wins");
                     return true;

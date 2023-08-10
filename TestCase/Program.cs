@@ -13,9 +13,6 @@ namespace Tut1
 {
     public class Program
     {
-        private const string XPLAYERTOKEN = "X";
-        private const string OPLAYERTOKEN = "O";
-
         private static Player __CurrentPlayer = Player.Crosses;
 
         private static BoardManager __BoardManager;
@@ -65,7 +62,7 @@ namespace Tut1
 
         private static void InputFromUser()
         {
-            Console.WriteLine($"Player '{(__CurrentPlayer == Player.Crosses ? XPLAYERTOKEN : OPLAYERTOKEN)}' turn");
+            Console.WriteLine($"Player '{(PlayerHelper.GetPlayerToken(__CurrentPlayer))}' turn");
 
             int row = GetInput(BoardPosition.Row);
 
