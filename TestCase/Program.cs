@@ -16,18 +16,20 @@ namespace Tut1
         private static Player __CurrentPlayer = Player.Crosses;
 
         private static BoardManager __BoardManager;
+        private static InputManager __InputManager;
 
         private static int turnCounter = 0;
 
         static void Main(string[] args)
         {
             __BoardManager = new BoardManager(3, 3);
+            __InputManager = new InputManager(0, 2);
 
             while (turnCounter < 9)
             {
                 __BoardManager.PrintBoard();
 
-                InputFromUser();
+                PlayerTurn();
 
                 turnCounter++;
 
@@ -45,43 +47,18 @@ namespace Tut1
             }
         }
 
-        private static int GetInput(BoardPosition position)
+        private static void PlayerTurn()
         {
-            Console.WriteLine($"Choose {position} position - Enter a number between 0 and 2: ");
+            PlayerPosition _Position = __InputManager.GetPlayerPositionFromUser(__CurrentPlayer);
 
-            if (int.TryParse(Console.ReadLine(), out int num))
-            {
-                if (num >= 0 && num <= 2)
-                {
-                    return num;
-                }
-            }
-
-            return GetInput(position);
-        }
-
-        private static void InputFromUser()
-        {
-            Console.WriteLine($"Player '{(PlayerHelper.GetPlayerToken(__CurrentPlayer))}' turn");
-
-            int row = GetInput(BoardPosition.Row);
-
-            int column = GetInput(BoardPosition.Column);
-
-            PlayerTurn(row, column);
-        }
-
-        private static void PlayerTurn(int xPlane, int yPlane)
-        {
-            
-            if (__BoardManager.AddPlayerPositionToBoard(__CurrentPlayer, xPlane, yPlane))
+            if (__BoardManager.AddPlayerPositionToBoard(__CurrentPlayer, _Position.Row, _Position.Column))
             {
                 __CurrentPlayer = __CurrentPlayer == Player.Crosses ? Player.Noughts : Player.Crosses;
             }
             else
             {
                 Console.WriteLine("Space already taken try again");
-                InputFromUser();
+                PlayerTurn();
             }
 
         }
