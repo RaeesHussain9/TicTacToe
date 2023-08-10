@@ -18,6 +18,9 @@
 
         public bool AddPlayerPositionToBoard(Player player, int row, int column)
         {
+            --row;
+            --column;
+
             if (__Board[row][column] == EMPTY_SPACE)
             {
                 __Board[row][column] = PlayerHelper.GetPlayerToken(player);

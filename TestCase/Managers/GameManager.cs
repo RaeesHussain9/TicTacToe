@@ -10,8 +10,9 @@
 
         public GameManager()
         {
-            __BoardManager = new BoardManager(3, 3);
-            __InputManager = new InputManager(0, 2);
+            int _GridSize = 3;
+            __BoardManager = new BoardManager(_GridSize, _GridSize);
+            __InputManager = new InputManager(1, _GridSize);
 
             __CurrentPlayer = Player.Crosses;
             __TurnCounter = 0;
