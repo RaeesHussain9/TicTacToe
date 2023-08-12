@@ -2,19 +2,19 @@
 {
     public class GameManager
     {
-        private Player __CurrentPlayer;
         private int __TurnCounter;
 
         private readonly BoardManager __BoardManager;
         private readonly InputManager __InputManager;
+        private readonly PlayerManager __PlayerManager;
 
         public GameManager()
         {
             int _GridSize = 3;
-            __BoardManager = new BoardManager(_GridSize, _GridSize);
-            __InputManager = new InputManager(1, _GridSize);
+            __PlayerManager = new PlayerManager(Player.Crosses);
+            __BoardManager = new BoardManager(_GridSize, _GridSize, __PlayerManager);
+            __InputManager = new InputManager(1, _GridSize, __PlayerManager);
 
-            __CurrentPlayer = Player.Crosses;
             __TurnCounter = 0;
         }
 
@@ -35,7 +35,7 @@
                 }
                 else if (__TurnCounter >= 9)
                 {
-                    Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!DRAW!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    Console.WriteLine("!!!!!!DRAW!!!!!!!");
                     break;
                 }
             }
@@ -43,11 +43,11 @@
 
         private void PlayerTurn()
         {
-            PlayerPosition _Position = __InputManager.GetPlayerPositionFromUser(__CurrentPlayer);
+            PlayerPosition _Position = __InputManager.GetPlayerPositionFromUser();
 
-            if (__BoardManager.AddPlayerPositionToBoard(__CurrentPlayer, _Position.Row, _Position.Column))
+            if (__BoardManager.AddPlayerPositionToBoard(_Position.Row, _Position.Column))
             {
-                __CurrentPlayer = __CurrentPlayer == Player.Crosses ? Player.Noughts : Player.Crosses;
+               __PlayerManager.NextPlayerTurn();
             }
             else
             {

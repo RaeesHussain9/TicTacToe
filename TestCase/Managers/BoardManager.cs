@@ -4,26 +4,28 @@
     {
         private const string EMPTY_SPACE = "-";
 
+        private readonly PlayerManager __PlayerManager;
         private readonly int __Rows;
         private readonly int __Columns;
         private string[][] __Board;
 
-        public BoardManager(int rows, int columns)
+        public BoardManager(int rows, int columns, PlayerManager playerManager)
         {
             __Rows = rows;
             __Columns = columns;
+            __PlayerManager = playerManager;
 
             InstantiateBoard();
         }
 
-        public bool AddPlayerPositionToBoard(Player player, int row, int column)
+        public bool AddPlayerPositionToBoard(int row, int column)
         {
             --row;
             --column;
 
             if (__Board[row][column] == EMPTY_SPACE)
             {
-                __Board[row][column] = PlayerHelper.GetPlayerToken(player);
+                __Board[row][column] = __PlayerManager.GetPlayerToken();
 
                 return true;
             }
@@ -71,13 +73,13 @@
 
                 if (rowEquals)
                 {
-                    if (firstElement == PlayerHelper.XPLAYERTOKEN)
+                    if (firstElement == GlobalConstants.X_PLAYER_TOKEN)
                     {
                         Console.WriteLine("player X wins");
                         noRowsMatch = false;
                         return true;
                     }
-                    else if ((firstElement == PlayerHelper.OPLAYERTOKEN))
+                    else if (firstElement == GlobalConstants.O_PLAYER_TOKEN)
                     {
                         Console.WriteLine("player O wins");
                         noRowsMatch = false;
@@ -103,13 +105,13 @@
                 }
                 if (colsEquals)
                 {
-                    if (firstColElement == PlayerHelper.XPLAYERTOKEN)
+                    if (firstColElement == GlobalConstants.X_PLAYER_TOKEN)
                     {
                         Console.WriteLine("player X wins");
                         noColsMatch = false;
                         return true;
                     }
-                    else if ((firstColElement == PlayerHelper.OPLAYERTOKEN))
+                    else if ((firstColElement == GlobalConstants.O_PLAYER_TOKEN))
                     {
                         Console.WriteLine("player O wins");
                         noColsMatch = false;
@@ -133,12 +135,12 @@
 
             if (mainDiagonalMatch)
             {
-                if (firstMainDiagonalElement == PlayerHelper.XPLAYERTOKEN)
+                if (firstMainDiagonalElement == GlobalConstants.X_PLAYER_TOKEN)
                 {
                     Console.WriteLine("player X wins");
                     return true;
                 }
-                else if (firstMainDiagonalElement == PlayerHelper.OPLAYERTOKEN)
+                else if (firstMainDiagonalElement == GlobalConstants.O_PLAYER_TOKEN)
                 {
                     Console.WriteLine("player O wins");
                     return true;
@@ -161,12 +163,12 @@
 
             if (inverseDiagonalMatch)
             {
-                if (firstInverseDiagonuleElement == PlayerHelper.XPLAYERTOKEN)
+                if (firstInverseDiagonuleElement == GlobalConstants.X_PLAYER_TOKEN)
                 {
                     Console.WriteLine("player X wins");
                     return true;
                 }
-                else if (firstInverseDiagonuleElement == PlayerHelper.OPLAYERTOKEN)
+                else if (firstInverseDiagonuleElement == GlobalConstants.O_PLAYER_TOKEN)
                 {
                     Console.WriteLine("player O wins");
                     return true;

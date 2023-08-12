@@ -4,11 +4,13 @@
     {
         private readonly int __MinValue;
         private readonly int __MaxValue;
+        private readonly PlayerManager __PlayerManager;
 
-        public InputManager(int minInputValue, int maxInputValue)
+        public InputManager(int minInputValue, int maxInputValue, PlayerManager playerManager)
         {
             __MinValue = minInputValue;
             __MaxValue = maxInputValue;
+            __PlayerManager = playerManager;
         }
 
         private int GetInput(BoardPosition position)
@@ -26,9 +28,9 @@
             return GetInput(position);
         }
 
-        public PlayerPosition GetPlayerPositionFromUser(Player currentPlayer)
+        public PlayerPosition GetPlayerPositionFromUser()
         {
-            Console.WriteLine($"Player '{(PlayerHelper.GetPlayerToken(currentPlayer))}' turn");
+            Console.WriteLine($"Player '{__PlayerManager.GetPlayerToken()}' turn");
 
             int row = GetInput(BoardPosition.Row);
 
