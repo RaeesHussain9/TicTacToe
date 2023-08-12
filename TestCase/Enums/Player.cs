@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TestCase
+namespace TestCase.Enums
 {
     public enum Player
     {

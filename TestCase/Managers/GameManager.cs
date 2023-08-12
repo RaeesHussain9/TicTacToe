@@ -1,4 +1,7 @@
-﻿namespace TestCase.Managers
+﻿using TestCase.Enums;
+using TestCase.Models;
+
+namespace TestCase.Managers
 {
     public class GameManager
     {

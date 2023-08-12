@@ -1,4 +1,6 @@
-﻿namespace TestCase.Managers
+﻿using TestCase.Enums;
+
+namespace TestCase.Managers
 {
     public class PlayerManager
     {

@@ -1,4 +1,4 @@
-﻿namespace TestCase
+﻿namespace TestCase.Enums
 {
     internal enum BoardPosition
     {

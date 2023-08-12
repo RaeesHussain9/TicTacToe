@@ -1,4 +1,4 @@
-﻿namespace TestCase
+﻿namespace TestCase.Models
 {
     public class PlayerPosition
     {
