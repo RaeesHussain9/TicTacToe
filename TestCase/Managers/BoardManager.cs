@@ -34,9 +34,9 @@
         }
 
         private void InstantiateBoard() 
-        {
-            __Board = Enumerable.Range(0, __Rows).Select(row => Enumerable.Range(0, __Columns).Select(element => EMPTY_SPACE).ToArray()).ToArray(); 
-        }
+            => __Board = Enumerable.Range(0, __Rows)
+                                   .Select(row => Enumerable.Range(0, __Columns).Select(element => EMPTY_SPACE).ToArray())
+                                   .ToArray(); 
 
         public void PrintBoard()
         {
