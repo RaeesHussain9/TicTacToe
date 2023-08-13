@@ -1,10 +1,11 @@
 ﻿//====================================To do list=====================================================
-// 1st - between each turn say whos turn it currently is
-// 2nd - input handling (optionally return it to redo the specific x or y input that needs redoing)
-// 3rd - loop it so that the players can play again if they want to
+// 1st - between each turn say whos turn it currently is - COMPLETED
+// 2nd - input handling (optionally return it to redo the specific x or y input that needs redoing) - COMPLETED
+// 3rd - loop it so that the players can play again if they want to - COMPLETED
 // 4th - split out the code into different classes
 // 5th - (optional) redo check win method to see if it can be shorter
-// 6th - post code to github get code reviewed by Avtar.
+// 6th - make the game look nicer by putting Console.WriteLines between each print
+// 7th - post code to github get code reviewed by Avtar.
 
 namespace Tut1
 {
@@ -24,6 +25,11 @@ namespace Tut1
 
         static void Main(string[] args)
         {
+            StartGame();
+        }
+
+        private static void StartGame() 
+        {
             while (turnCounter < 9)
             {
                 PrintBoard();
@@ -35,48 +41,113 @@ namespace Tut1
                 if (turnCounter >= 5 && CheckWin())
                 {
                     PrintBoard();
+                    ResetChoiceInput();
                     break;
                 }
                 else if (turnCounter >= 9)
                 {
                     Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!DRAW!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    ResetChoiceInput();
                     break;
                 }
 
             }
         }
 
-        private static int GetInput()
+        private static void ResetChoiceInput()
         {
-            Console.WriteLine("Enter number: ");
+            Console.WriteLine();
+            Console.WriteLine("would you like to play again. ");
+
+            Console.Write("Y for yes or N for no. ");
+
+            string resetChoice = Console.ReadLine();
+
+            if (resetChoice == "Y")
+            {
+                ResetGame();
+            }
+            else if (resetChoice == "y")
+            {
+                ResetGame();
+            }
+            else if (resetChoice == "N")
+            {
+                Environment.Exit(0);
+            }
+            else if (resetChoice == "n") 
+            {
+                Environment.Exit(0);
+            }
+        }
+
+            private static void ResetGame()
+        {
+            Console.WriteLine();
+            Console.WriteLine("++++++++++++++++++++++++++++++NEW GAME++++++++++++++++++++++++++++++++++++++");
+            turnCounter = 0;
+
+            isPlayerXTurn = true;
+            isPlayerOTurn = false;
+
+            Board = new string[3, 3] { {"-","-","-"},
+                                       {"-","-","-"},
+                                       {"-","-","-"}};
+
+            StartGame();
+
+        }
+        //do not forget to do input handling for the reset choice inputs
+        // should ask for inputs in another method
+
+            private static int GetInput()
+        {
+            Console.Write("Enter number between 1 and 3: ");
 
             if (int.TryParse(Console.ReadLine(), out int num))
             {
-                return num;
+                if (num >= 1 && num <= 3)
+                {
+                    return num;
+                }
+                else
+                {
+                    Console.WriteLine("you must give a number between 1 and 3");
+                    return GetInput();
+                }
+
             }
 
+            Console.WriteLine("Please enter a number between 1 and 3");
             return GetInput();
         }
 
         private static void InputFromUser()
         {
-            Console.Write("Input a number between 0 and 2. ");
+            if (isPlayerXTurn)
+            {
+                Console.WriteLine("it is currently Player X's turn");
+            }
+            else if (isPlayerOTurn)
+            {
+                Console.WriteLine("it is currently Player O's turn");
+            }
 
-            int xPLane = int.Parse(Console.ReadLine());
+            int row = GetInput() - 1;
 
-            Console.Write("Input a number between 0 and 2. ");
+            int col = GetInput() - 1;
 
-            int yPlane = int.Parse(Console.ReadLine());
+            Console.WriteLine($"row input = {row}, col input =  {col}", row, col);
 
-            PlayerTurn(xPLane, yPlane);
+            PlayerTurn(row, col);
         }
 
-        private static void PlayerTurn(int xPlane, int yPlane)
+        private static void PlayerTurn(int row, int col)
         {
             
-            if (Board[xPlane, yPlane] == "-")
+            if (Board[row, col] == "-")
             {
-                Board[xPlane, yPlane] = isPlayerXTurn ? XPLAYERTOKEN : OPLAYERTOKEN;
+                Board[row, col] = isPlayerXTurn ? XPLAYERTOKEN : OPLAYERTOKEN;
 
                 isPlayerXTurn = !isPlayerXTurn;
                 isPlayerOTurn = !isPlayerOTurn;
@@ -104,6 +175,8 @@ namespace Tut1
             }
         }
 
+
+
         private static bool CheckWin()
         {
             int rLen = Board.GetLength(0);
@@ -122,7 +195,6 @@ namespace Tut1
                     if (firstElement != Board[i, j])
                     {
                         rowEquals = false;
-                        //Console.WriteLine("somethings hapening");
                         break;
                     }
                 }
@@ -146,8 +218,6 @@ namespace Tut1
 
             /////////////////////////////////////////////////////check if any cols match
 
-            //Console.WriteLine();
-
             bool noColsMatch = true;
             for (int i = 0; i < rLen; i++)
             {
@@ -157,7 +227,6 @@ namespace Tut1
                 {
                     if (firstColElement != Board[j, i])
                     {
-                        Console.WriteLine("do something");
                         colsEquals = false;
                         break;
                     }
@@ -188,8 +257,6 @@ namespace Tut1
             {
                 if (firstMainDiagonalElement != Board[i, i])
                 {
-                    Console.WriteLine("doing something");
-                    Console.WriteLine("current arr value = {0}; array index = {1}", Board[i, i], i);
                     mainDiagonalMatch = false;
                     break;
                 }
@@ -218,8 +285,6 @@ namespace Tut1
             {
                 if (firstInverseDiagonuleElement != Board[i, rLen - 1 - i])
                 {
-                    Console.WriteLine("doing something");
-                    Console.WriteLine("current arr value = {0}; array index = {1}", Board[i, rLen - 1 - i], i);
                     inverseDiagonalMatch = false;
                     break;
                 }
@@ -245,9 +310,6 @@ namespace Tut1
                 return false;
             }
 
-            //OVERALL IT WORKS AS IT IS INTENDED TO WORK CHECKS ALL WIN CONDITIONS CORRECTLY.
-            //HOWEVER ALL OTHER CHECKS STILL RUN EVEN AFTER A WIN CONDITION IS ALREADY FOUND.
-            //THIS SHOULD BE FIXED IF THE REST OF THE GAME IS DONE SINCE CALLING OTHER METHODS SHOULD END THE METHOD BY RUNNINGA ANOTHER METHODS
             return false;
         } 
 
