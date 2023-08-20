@@ -13,8 +13,6 @@ namespace Tut1
 {
     public class Program
     {
-        //private BoardManager boardManager;
-
         static void Main(string[] args)
         {
             new GameManager().StartGame();

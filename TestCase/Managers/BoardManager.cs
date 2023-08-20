@@ -8,44 +8,6 @@
                                                              {"-","-","-"},
                                                              {"-","-","-"}};
 
-
-        public void ResetBoard() 
-        {
-            for (int i = 0; i < Board.GetLength(0); i++)
-            {
-                for (int j = 0; j < Board.GetLength(1); j++)
-                {
-                    Board[i,j] = EMPTY_SPACE_TOKEN;
-                }
-            }
-        }
-
-        public void PrintBoard()
-        {
-            int rows = Board.GetLength(0);
-            int cols = Board.GetLength(1);
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    Console.Write(Board[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
-
-        public bool PlaceToken(int row, int col, string givenToken)
-        {
-            if (Board[row, col] == "-")
-            {
-                Board[row, col] = givenToken;
-                return true;
-            }
-
-            return false;
-        }
-
         public bool CheckWin()
         {
             int rLen = Board.GetLength(0);
@@ -72,12 +34,12 @@
                 {
                     if (firstElement == GlobalConsts.X_PLAYER_TOKEN)
                     {
-                        Console.WriteLine("player X wins");
+                        Console.WriteLine("\nplayer X wins");
                         return true;
                     }
                     else if ((firstElement == GlobalConsts.O_PLAYER_TOKEN))
                     {
-                        Console.WriteLine("player O wins");
+                        Console.WriteLine("\nplayer O wins");
                         return true;
                     }
                 }
@@ -102,12 +64,12 @@
                 {
                     if (firstColElement == GlobalConsts.X_PLAYER_TOKEN)
                     {
-                        Console.WriteLine("player X wins");
+                        Console.WriteLine("\nplayer X wins");
                         return true;
                     }
                     else if ((firstColElement == GlobalConsts.O_PLAYER_TOKEN))
                     {
-                        Console.WriteLine("player O wins");
+                        Console.WriteLine("\nplayer O wins");
                         return true;
                     }
                 }
@@ -131,12 +93,12 @@
             {
                 if (firstMainDiagonalElement == GlobalConsts.X_PLAYER_TOKEN)
                 {
-                    Console.WriteLine("player X wins");
+                    Console.WriteLine("\nplayer X wins");
                     return true;
                 }
                 else if (firstMainDiagonalElement == GlobalConsts.O_PLAYER_TOKEN)
                 {
-                    Console.WriteLine("player O wins");
+                    Console.WriteLine("\nplayer O wins");
                     return true;
                 }
             }
@@ -159,23 +121,61 @@
             {
                 if (firstInverseDiagonuleElement == GlobalConsts.X_PLAYER_TOKEN)
                 {
-                    Console.WriteLine("player X wins");
+                    Console.WriteLine("\nplayer X wins");
                     return true;
                 }
                 else if (firstInverseDiagonuleElement == GlobalConsts.O_PLAYER_TOKEN)
                 {
-                    Console.WriteLine("player O wins");
+                    Console.WriteLine("\nplayer O wins");
                     return true;
                 }
             }
 
             if (!inverseDiagonalMatch && !mainDiagonalMatch && noRowsMatch && noColsMatch)
             {
-                Console.WriteLine("no winner yet!!!!!!");
+                Console.WriteLine("\nno winner yet!!!!!!");
                 return false;
             }
 
             return false;
         }
+
+        public bool PlaceToken(int row, int col, string givenToken)
+        {
+            if (Board[row, col] == EMPTY_SPACE_TOKEN)
+            {
+                Board[row, col] = givenToken;
+                return true;
+            }
+
+            return false;
+        }
+
+        public void PrintBoard()
+        {
+            int rows = Board.GetLength(0);
+            int cols = Board.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(Board[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public void ResetBoard() 
+        {
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < Board.GetLength(1); j++)
+                {
+                    Board[i,j] = EMPTY_SPACE_TOKEN;
+                }
+            }
+        }
+
     }
 }
