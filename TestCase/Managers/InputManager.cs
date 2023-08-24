@@ -1,6 +1,4 @@
-﻿using System.Runtime.Intrinsics.X86;
-
-namespace TestCase.Managers
+﻿namespace TestCase.Managers
 {
     public class InputManager
     {
@@ -14,11 +12,6 @@ namespace TestCase.Managers
                 {
                     return num;
                 }
-                else
-                {
-                    Console.WriteLine("\nyou must give a number between 1 and 3");
-                    return GetInput();
-                }
             }
             Console.WriteLine("\nPlease enter a number between 1 and 3");
             return GetInput();
@@ -26,31 +19,22 @@ namespace TestCase.Managers
 
         public bool ResetChoiceInput()
         {
-            Console.WriteLine();
             Console.WriteLine("\nwould you like to play again. ");
 
             Console.Write("\nY for yes or N for no. ");
 
             string resetChoice = Console.ReadLine();
 
-            if (resetChoice == "Y")
+            if (string.Equals(resetChoice, "y", StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
-            else if (resetChoice == "y")
-            {
-                return true;
-            }
-            else if (resetChoice == "N")
-            {
-                return false;
-            }
-            else if (resetChoice == "n")
+            else if (string.Equals(resetChoice, "n", StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
 
-            Console.WriteLine("\nplease input something");
+                Console.WriteLine("\nplease input something");
             return ResetChoiceInput();
         }
     }

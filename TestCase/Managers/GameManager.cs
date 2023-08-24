@@ -5,36 +5,36 @@
         private readonly BoardManager _boardManager;
         private readonly InputManager _inputManager;
 
-        private bool isPlayerXTurn = true;
-        private bool isPlayerOTurn = false;
+        private bool isPlayerXTurn;
+        private bool isPlayerOTurn;
 
-        private int turnCounter = 0;
+        private int turnCounter;
+        private readonly int positionIndexDiffrence = 1;
+        private readonly int maxNumberOfTurns = 9;
+        private readonly int minWinChance = 5;
+
+
 
         public GameManager()
         {
-            this._boardManager = new BoardManager();
-            this._inputManager = new InputManager();
+            _boardManager = new BoardManager();
+            _inputManager = new InputManager();
+
+            InitialiseGame();
         }
 
-        public void InputFromUser()
+        private void GetRowAndColumnPosition()
         {
-            if (isPlayerXTurn)
-            {
-                Console.WriteLine("\nit is currently Player X's turn");
-            }
-            else if (isPlayerOTurn)
-            {
-                Console.WriteLine("\nit is currently Player O's turn");
-            }
+            Console.WriteLine($"\nit is currently player {(isPlayerXTurn ? GlobalConsts.X_PLAYER_TOKEN : GlobalConsts.O_PLAYER_TOKEN)}'s turn");
 
-            int row = _inputManager.GetInput() - 1;
+            int row = _inputManager.GetInput() - positionIndexDiffrence;
 
-            int col = _inputManager.GetInput() - 1;
+            int col = _inputManager.GetInput() - positionIndexDiffrence;
 
             PlayerTurn(row, col);
         }
 
-        public void PlayerTurn(int row, int col)
+        private void PlayerTurn(int row, int col)
         {
            if (_boardManager.PlaceToken(row, col,isPlayerXTurn ? GlobalConsts.X_PLAYER_TOKEN : GlobalConsts.O_PLAYER_TOKEN)) 
             {
@@ -44,37 +44,44 @@
             else 
             {
                 Console.WriteLine("\nSpace taken try again");
-                InputFromUser();
+                GetRowAndColumnPosition();
             }
         }
 
-        public void ResetGame()
+        private void InitialiseGame()
         {
-            Console.WriteLine("\n++++++++++++++++++++++++++++++NEW GAME++++++++++++++++++++++++++++++++++++++");
             turnCounter = 0;
 
             isPlayerXTurn = true;
             isPlayerOTurn = false;
 
-            _boardManager.ResetBoard();
+        }
+
+        private void ResetGame() 
+        {
+            Console.WriteLine("\n++++++++++++++++++++++++++++++NEW GAME++++++++++++++++++++++++++++++++++++++");
+
+            InitialiseGame();
+
+            _boardManager.InitializeBoard();
 
             StartGame();
-
         }
 
         public void StartGame()
         {
-            while (turnCounter < 9)
+            while (turnCounter < maxNumberOfTurns)
             {
                 _boardManager.PrintBoard();
 
-                InputFromUser();
+                GetRowAndColumnPosition();
 
                 turnCounter++;
 
-                if (turnCounter >= 5 && _boardManager.CheckWin())
+                if (turnCounter >= minWinChance && _boardManager.CheckWin())
                 {
                     _boardManager.PrintBoard();
+                 
                     if (_inputManager.ResetChoiceInput())
                     {
                         ResetGame();
@@ -86,7 +93,7 @@
 
                     break;
                 }
-                else if (turnCounter >= 9)
+                else if (turnCounter >= maxNumberOfTurns)
                 {
                     Console.WriteLine("\n!!!!!!!!!!!!!!!!!!!!!!!!DRAW!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     _inputManager.ResetChoiceInput();
