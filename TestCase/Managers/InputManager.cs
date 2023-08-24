@@ -2,7 +2,7 @@
 {
     public class InputManager
     {
-        public int GetInput()
+        public int GetRowAndColumnPosition()
         {
             Console.Write("\nEnter number between 1 and 3: ");
 
@@ -14,10 +14,10 @@
                 }
             }
             Console.WriteLine("\nPlease enter a number between 1 and 3");
-            return GetInput();
+            return GetRowAndColumnPosition();
         }
 
-        public bool ResetChoiceInput()
+        public bool ResetChoice()
         {
             Console.WriteLine("\nwould you like to play again. ");
 
@@ -35,7 +35,7 @@
             }
 
                 Console.WriteLine("\nplease input something");
-            return ResetChoiceInput();
+            return ResetChoice();
         }
     }
 }

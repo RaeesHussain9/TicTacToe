@@ -6,10 +6,9 @@
         private readonly InputManager _inputManager;
 
         private bool isPlayerXTurn;
-        private bool isPlayerOTurn;
 
         private int turnCounter;
-        private readonly int positionIndexDiffrence = 1;
+        private readonly int positionIndexDifference = 1;
         private readonly int maxNumberOfTurns = 9;
         private readonly int minWinChance = 5;
 
@@ -23,13 +22,13 @@
             InitialiseGame();
         }
 
-        private void GetRowAndColumnPosition()
+        private void HandleRowAndColumnPosition()
         {
             Console.WriteLine($"\nit is currently player {(isPlayerXTurn ? GlobalConsts.X_PLAYER_TOKEN : GlobalConsts.O_PLAYER_TOKEN)}'s turn");
 
-            int row = _inputManager.GetInput() - positionIndexDiffrence;
+            int row = _inputManager.GetRowAndColumnPosition() - positionIndexDifference;
 
-            int col = _inputManager.GetInput() - positionIndexDiffrence;
+            int col = _inputManager.GetRowAndColumnPosition() - positionIndexDifference;
 
             PlayerTurn(row, col);
         }
@@ -39,12 +38,11 @@
            if (_boardManager.PlaceToken(row, col,isPlayerXTurn ? GlobalConsts.X_PLAYER_TOKEN : GlobalConsts.O_PLAYER_TOKEN)) 
             {
                 isPlayerXTurn = !isPlayerXTurn;
-                isPlayerOTurn = !isPlayerOTurn;
             }
             else 
             {
                 Console.WriteLine("\nSpace taken try again");
-                GetRowAndColumnPosition();
+                HandleRowAndColumnPosition();
             }
         }
 
@@ -53,7 +51,6 @@
             turnCounter = 0;
 
             isPlayerXTurn = true;
-            isPlayerOTurn = false;
 
         }
 
@@ -74,7 +71,7 @@
             {
                 _boardManager.PrintBoard();
 
-                GetRowAndColumnPosition();
+                HandleRowAndColumnPosition();
 
                 turnCounter++;
 
@@ -82,7 +79,7 @@
                 {
                     _boardManager.PrintBoard();
                  
-                    if (_inputManager.ResetChoiceInput())
+                    if (_inputManager.ResetChoice())
                     {
                         ResetGame();
                     }
@@ -96,7 +93,7 @@
                 else if (turnCounter >= maxNumberOfTurns)
                 {
                     Console.WriteLine("\n!!!!!!!!!!!!!!!!!!!!!!!!DRAW!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    _inputManager.ResetChoiceInput();
+                    _inputManager.ResetChoice();
                     break;
                 }
 
